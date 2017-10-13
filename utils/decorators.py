@@ -1,4 +1,6 @@
-#!/usr/bin/python3.6
+#!/usr/bin/python2.7
+
+from utils import exceptions
 
 
 def singleton(class_):
@@ -19,3 +21,16 @@ def singleton(class_):
 
     ClassW.__name__ = class_.__name__
     return ClassW
+
+
+def handleDbException(F):
+
+    def wrapper(*args):
+        try:
+            F()
+        except exceptions.DataBaseException:
+            return False
+        else:
+            return True
+
+    return wrapper

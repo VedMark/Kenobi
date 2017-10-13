@@ -1,16 +1,15 @@
-#!/usr/bin/python3.6
+#!/usr/bin/python2.7
 
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QApplication, QStyleFactory
+from app.AppView import AppView
 
 
 def run_kenobi_app():
     application = QApplication(sys.argv)
-
-    widget = QWidget()
-    widget.setWindowFlags(Qt.Window | Qt.FramelessWindowHint)
-
+    QApplication.setStyle(QStyleFactory.create('Fusion'))
+    appWindow = AppView()
+    appWindow.show()
     sys.exit(application.exec_())
 
 
