@@ -3,7 +3,7 @@
 from PyQt5.QtCore import QObject, QMetaObject, Q_ARG, QVariant, QUrl, pyqtSignal, pyqtSlot
 from PyQt5.QtQuick import QQuickItem
 from PyQt5.QtQuickWidgets import QQuickWidget
-from modules.schedule.SchedulePresenter import SchedulePresenter
+from modules.schedule.schedulePresenter import SchedulePresenter
 
 
 class ScheduleView(QObject):
@@ -13,7 +13,7 @@ class ScheduleView(QObject):
         self._widget = QQuickWidget(parent)
         self._widget.rootContext().setContextProperty('scheduleView', self)
         self._widget.rootContext().setContextProperty('groupsModel', self)
-        self._widget.setSource(QUrl('modules/schedule/Form.qml'))
+        self._widget.setSource(QUrl('modules/schedule/form.qml'))
         self.reqReprSchedules.connect(self.setScheduleModel)
 
     _reqGroups = pyqtSignal(name='requireGroups')

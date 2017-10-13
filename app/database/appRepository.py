@@ -1,8 +1,8 @@
 #!/usr/bin/python2.7
 
-from PyQt5.QtSql import QSqlDatabase, QSqlQuery
-
 from abc import abstractmethod, ABCMeta
+from PyQt5.QtSql import QSqlDatabase, QSqlQuery
+from app.database.exceptions import DatabaseConnectionError
 
 
 class AppRepository:
@@ -12,10 +12,15 @@ class AppRepository:
     __TABLE_INFO_COLUMNS = 'name'
 
     def __init__(self):
+        try:
             self.connection = QSqlDatabase.addDatabase('QSQLITE')
             self.connection.setDatabaseName(AppRepository.__DATABASE_FILE)
             self.connection.open()
+            if not self.connection.isOpen():
+                raise DatabaseConnectionError(self, 'Cannot open')
             self.query = QSqlQuery(self.connection)
+        except DatabaseConnectionError as exception:
+            exception.show()
 
     def __del__(self):
         self.connection.close()
@@ -23,7 +28,7 @@ class AppRepository:
         del self.query
 
     def __str__(self):
-        return 'Database: ' + AppRepository.__DATABASE_TYPE
+        return AppRepository.__DATABASE_TYPE + ', ' + AppRepository.__DATABASE_FILE
 
     @abstractmethod
     def selectSatisfying(self, specification):

@@ -1,8 +1,6 @@
 import QtQuick 2.5
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
-import QtQuick.Layouts 1.2
-import QtQuick.Window 2.2
 
 Rectangle {
     property int heightRect: 705
@@ -11,6 +9,17 @@ Rectangle {
     border.width: 3
     height: heightRect
     state: "collapsed"
+
+    Text {
+        id: title
+        anchors.centerIn: parent
+        font.pixelSize: 16
+        font.bold: true
+        font.family: "Helvetica"
+        color: "#000000"
+        text: "Schedule"
+        transform: Rotation {origin.y: -25; axis { x: 0; y: 0; z: 1 } angle: 270 }
+    }
 
     states: [
         State {
@@ -29,6 +38,10 @@ Rectangle {
                 target: scheduleList
                 visible: false
             }
+            PropertyChanges {
+                target: title
+                visible: true
+            }
         },
 
         State {
@@ -46,6 +59,10 @@ Rectangle {
             PropertyChanges {
                 target: scheduleList
                 visible: true
+            }
+            PropertyChanges {
+                target: title
+                visible: false
             }
         }
     ]

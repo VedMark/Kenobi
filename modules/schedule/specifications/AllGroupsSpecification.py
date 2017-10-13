@@ -1,6 +1,6 @@
 #!/usr/bin/python2.7
 
-from utils.specifications import SqlSpecification
+from app.database.sqlSpecification import SqlSpecification
 
 
 class AllGroupsSpecification(SqlSpecification):

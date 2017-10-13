@@ -1,7 +1,7 @@
 #!/usr/bin/python2.7
 
 from PyQt5.QtWidgets import QDialog
-from modules.schedule.ScheduleView import ScheduleView
+from modules.schedule.scheduleView import ScheduleView
 
 
 class AppView:

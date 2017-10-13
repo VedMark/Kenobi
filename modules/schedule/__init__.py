@@ -1,3 +1,3 @@
 #!/usr/bin/python2.7
 
-__all__ = ['ScheduleView']
+__all__ = ['scheduleView']

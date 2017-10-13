@@ -1,7 +1,8 @@
 #!/usr/bin/python2.7
 
-from app.database.AppRepository import AppRepository
-from modules.schedule.Schedule import Schedule
+from app.database.appRepository import AppRepository
+from app.database.exceptions import DatabaseRequestError
+from modules.schedule.schedule import Schedule
 
 
 class ScheduleRepository(AppRepository):
@@ -12,11 +13,14 @@ class ScheduleRepository(AppRepository):
     __LESSON = 'lesson'
 
     def __init__(self):
-        AppRepository.__init__(self)
+            AppRepository.__init__(self)
 
     def selectSatisfying(self, specification):
-        self.query.exec_(specification.toSqlClauses())
-        return self.__build_instances()
+        try:
+            self.query.exec_(specification.toSqlClauses())
+            return self.__build_instances()
+        except DatabaseRequestError as exception:
+            exception.show()
 
     def __build_instances(self):
         instances = list()
