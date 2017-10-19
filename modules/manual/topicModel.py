@@ -1,11 +1,11 @@
 #!/usr/bin/python2.7
 
-from modules.schedule.scheduleRepository import ScheduleRepository
+from modules.manual.topicRepository import TopicRepository
 
 
-class ScheduleModel:
+class TopicModel:
     def __init__(self):
-        self._repository = ScheduleRepository()
+        self._repository = TopicRepository()
 
     def getEnries(self, specification):
         return self._repository.selectSatisfying(specification)

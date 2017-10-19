@@ -2,8 +2,8 @@
 
 from PyQt5.QtCore import QObject, pyqtSlot
 from modules.schedule.scheduleModel import ScheduleModel
-from modules.schedule.specifications.AllGroupsSpecification import AllGroupsSpecification
-from modules.schedule.specifications.ScheduleByGroupSpecification import ScheduleByGroupSpecification
+from modules.schedule.specifications.allGroupsSpecification import AllGroupsSpecification
+from modules.schedule.specifications.scheduleByGroupSpecification import ScheduleByGroupSpecification
 
 
 class SchedulePresenter(QObject):

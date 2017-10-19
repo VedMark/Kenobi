@@ -7,8 +7,8 @@ from modules.schedule.schedule import Schedule
 
 class ScheduleRepository(AppRepository):
     __ID = 'id'
-    __GROUP = 'group'
-    __SUBJECT = 'subject'
+    __GROUP = 'class'
+    __SUBJECT = 'name'
     __DAY = 'day'
     __LESSON = 'lesson'
 
@@ -18,20 +18,20 @@ class ScheduleRepository(AppRepository):
     def selectSatisfying(self, specification):
         try:
             self.query.exec_(specification.toSqlClauses())
-            return self.__build_instances()
+            return self._build_instances()
         except DatabaseRequestError as exception:
             exception.show()
 
-    def __build_instances(self):
+    def _build_instances(self):
         instances = list()
         if self.query.isActive():
             self.query.first()
             while self.query.isValid():
-                id = self.query.value('id')
-                group = self.query.value('class')
-                subject = self.query.value('name')
-                day = self.query.value('day')
-                lesson = self.query.value('lesson')
+                id = self.query.value(ScheduleRepository.__ID)
+                group = self.query.value(ScheduleRepository.__GROUP)
+                subject = self.query.value(ScheduleRepository.__SUBJECT)
+                day = self.query.value(ScheduleRepository.__DAY)
+                lesson = self.query.value(ScheduleRepository.__LESSON)
                 instances.append(Schedule(id=id, group=group, subject=subject, day=day, lesson=lesson))
                 self.query.next()
             self.query.finish()

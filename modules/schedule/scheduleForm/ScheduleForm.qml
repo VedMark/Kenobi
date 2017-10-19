@@ -3,7 +3,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
 Rectangle {
-    property int heightRect: 705
+    property int heightRect: 704
 
     id: schedulePanel
     border.width: 3
@@ -163,7 +163,6 @@ Rectangle {
         style: ComboBoxStyle {
             background: Rectangle {
               id: rectCategory
-              border.width: 3
               color: "#38300a"
             }
 
