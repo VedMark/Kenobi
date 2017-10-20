@@ -3,7 +3,7 @@
 from PyQt5.QtCore import QMetaObject, Q_ARG, QVariant, QUrl, pyqtSignal, pyqtSlot
 from PyQt5.QtQuick import QQuickItem
 from PyQt5.QtQuickWidgets import QQuickWidget
-from PyQt5.QtWidgets import QWidget, QHBoxLayout
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QSizePolicy
 
 from modules.schedule.schedulePresenter import SchedulePresenter
 
@@ -16,6 +16,7 @@ class ScheduleView(QWidget):
         self.setLayout(QHBoxLayout())
         self.layout().setContentsMargins(1, 1, 1, 1)
         self.layout().addWidget(self._widget)
+        self._widget.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self._widget.setResizeMode(QQuickWidget.SizeRootObjectToView)
         self._widget.rootContext().setContextProperty('scheduleView', self)
         self._widget.rootContext().setContextProperty('groupsModel', self)
@@ -23,10 +24,9 @@ class ScheduleView(QWidget):
         self.reqReprSchedules.connect(self.setModel)
         self.reqInitSchedule.connect(self.initSchedule)
 
-    def handleResizing(self):
-        self.setVisible(not self.isVisible())
-        if self.isVisible():
-            self.reqInitSchedule.emit(self._widget.rootObject())
+    @pyqtSlot(int, name='changeWidth')
+    def _changeWidth(self, _width):
+        self.setFixedWidth(_width)
 
     _reqGroups = pyqtSignal(name='requireGroups')
     _reqSchedules = pyqtSignal(str, name='requireSchedules', arguments=['group'])

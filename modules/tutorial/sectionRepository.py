@@ -1,7 +1,7 @@
 #!/usr/bin/python2.7
 
 from app.database.appRepository import AppRepository
-from modules.manual.section import Section
+from modules.tutorial.section import Section
 
 
 class SectionRepository(AppRepository):

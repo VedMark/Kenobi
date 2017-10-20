@@ -1,7 +1,7 @@
 #!/usr/bin/python2.7
 
 from app.database.appRepository import AppRepository
-from modules.manual.topic import Topic
+from modules.tutorial.topic import Topic
 
 
 class TopicRepository(AppRepository):

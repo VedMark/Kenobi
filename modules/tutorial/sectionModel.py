@@ -1,6 +1,6 @@
 #!/usr/bin/python2.7
 
-from modules.manual.sectionRepository import SectionRepository
+from modules.tutorial.sectionRepository import SectionRepository
 
 
 class SectionModel:

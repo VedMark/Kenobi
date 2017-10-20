@@ -5,13 +5,13 @@ from PyQt5.QtQuick import QQuickItem
 from PyQt5.QtQuickWidgets import QQuickWidget
 from PyQt5.QtWidgets import QWidget, QHBoxLayout
 
-from modules.manual.manualPresenter import ManualPresenter
+from modules.tutorial.tutorialPresenter import TutorialPresenter
 
 
-class ManualView(QWidget):
+class TutorialView(QWidget):
     def __init__(self, parent=None):
         QWidget.__init__(self, parent=parent)
-        self._presenter = ManualPresenter(self)
+        self._presenter = TutorialPresenter(self)
         self.reqReprSections.connect(self.setModel)
         self.reqReprTopics.connect(self.setModel)
         self._widget = QQuickWidget(self)
@@ -19,8 +19,8 @@ class ManualView(QWidget):
         self.layout().setContentsMargins(1, 1, 1, 1)
         self.layout().addWidget(self._widget)
         self._widget.setResizeMode(QQuickWidget.SizeRootObjectToView)
-        self._widget.rootContext().setContextProperty('manualView', self)
-        self._widget.setSource(QUrl('modules/manual/manualForm/ManualForm.qml'))
+        self._widget.rootContext().setContextProperty('tutorialView', self)
+        self._widget.setSource(QUrl('modules/tutorial/tutorialForm/TutorialForm.qml'))
         self.getSections()
 
     _reqSections = pyqtSignal(name='requireSections')

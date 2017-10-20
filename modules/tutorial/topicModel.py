@@ -1,6 +1,6 @@
 #!/usr/bin/python2.7
 
-from modules.manual.topicRepository import TopicRepository
+from modules.tutorial.topicRepository import TopicRepository
 
 
 class TopicModel:

@@ -97,13 +97,13 @@ Rectangle {
                     width: parent.width
                     height:parent.height
                     model: sectionsModel
-                    delegate: ManualDelegate {
+                    delegate: TutorialDelegate {
                         text: title
                         onClicked: {
                             titlePr = model.title
                             var sectId = model.sectionId
                             stackView.push(topicsComponent)
-                            manualView.getTopics(sectId)
+                            tutorialView.getTopics(sectId)
                         }
                     }
                 }
@@ -131,7 +131,7 @@ Rectangle {
                     width: parent.width
                     height: parent.height
                     model: topicsModel
-                    delegate: ManualDelegate {
+                    delegate: TutorialDelegate {
                         text: title
                         onClicked: {
                             titlePr = titlePr + ": " + model.title

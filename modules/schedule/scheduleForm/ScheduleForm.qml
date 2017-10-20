@@ -4,10 +4,76 @@ import QtQuick.Controls.Styles 1.4
 
 Rectangle {
     id: schedulePanel
-    width: 300
     height: 600
     border.width: 3
-    color: "#FFFFFF"
+    state: "collapsed"
+
+    Text {
+        id: title
+        anchors.centerIn: parent
+        font.pixelSize: 16
+        font.bold: true
+        font.family: "Helvetica"
+        color: "#000000"
+        text: "Schedule"
+        transform: Rotation {origin.y: -25; axis { x: 0; y: 0; z: 1 } angle: 270 }
+    }
+
+    states: [
+        State {
+            name: "collapsed"
+            PropertyChanges {
+                target: schedulePanel
+                color: "#ffd200"
+                width: 25
+            }
+            PropertyChanges {
+                target: groupsList
+                visible: false
+            }
+            PropertyChanges {
+                target: scheduleList
+                visible: false
+            }
+            PropertyChanges {
+                target: title
+                visible: true
+            }
+             StateChangeScript {
+                name: "myScript1"
+                script: {
+                    scheduleView.changeWidth(width)
+                }
+            }
+        },
+
+        State {
+            name: "deployed"
+            PropertyChanges {
+                target: schedulePanel
+                color: "#FFFFFF"
+                width: 300
+            }
+            PropertyChanges {
+                target: groupsList
+                visible: true
+            }
+            PropertyChanges {
+                target: scheduleList
+                visible: true
+            }
+            PropertyChanges {
+                target: title
+                visible: false
+            }
+             StateChangeScript {
+                name: "myScript2"
+                script: {
+                    scheduleView.changeWidth(width)
+                }
+            }
+        }
+    ]
 
     MouseArea {
         anchors.fill: parent

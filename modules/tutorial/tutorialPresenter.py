@@ -1,13 +1,13 @@
 #!/usr/bin/python2.7
 
 from PyQt5.QtCore import QObject, pyqtSlot
-from modules.manual.specifications.allSectionsSpecification import AllSectionsSpecification
-from modules.manual.specifications.topicsByIdSpecification import TopicsByIdSpecification
-from modules.manual.sectionModel import SectionModel
-from modules.manual.topicModel import TopicModel
+from modules.tutorial.specifications.allSectionsSpecification import AllSectionsSpecification
+from modules.tutorial.specifications.topicsByIdSpecification import TopicsByIdSpecification
+from modules.tutorial.sectionModel import SectionModel
+from modules.tutorial.topicModel import TopicModel
 
 
-class ManualPresenter(QObject):
+class TutorialPresenter(QObject):
     def __init__(self, view):
         QObject.__init__(self)
         self._view = view
