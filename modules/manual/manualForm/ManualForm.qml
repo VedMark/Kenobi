@@ -5,11 +5,11 @@ import QtQuick.Controls.Styles 1.4
 
 Rectangle {
     id: contentWidget
-    width: 1335
-    height: 704
+    width: 800
+    height: 600
     border.width: 3
-    
-    property string titlePr: stackView.depth > 1 ? stackView.currentItem.model.title : "Tutorial"
+
+    property string titlePr: "Tutorial"
 
     Rectangle {
         id: titleWdt
@@ -25,7 +25,7 @@ Rectangle {
             height: parent.height
             opacity: stackView.depth > 1 ? 1 : 0
             border.width: 3
-            color: backmouse.pressed ? "#ffd200" : "#ffb500"
+            color: backmouse.pressed ? "#ff8421" : "#d87e36"
             Image {
                 anchors.centerIn: parent
                 anchors.fill: parent
@@ -137,6 +137,31 @@ Rectangle {
                             titlePr = titlePr + ": " + model.title
                             stackView.push({item: contentComponent, properties: {content: model.content}})
                         }
+                        Rectangle {
+                            anchors.top: parent.top
+                            anchors.topMargin: 4
+                            anchors.bottom: parent.bottom
+                            anchors.bottomMargin: 4
+                            anchors.right: parent.right
+                            width: testTxt.width + 30
+                            border.width: 3
+                            anchors.rightMargin: 50
+                            color: testMouseArea.pressed ? "#ff8421" : "#d87e36"
+                            Text {
+                                id: testTxt
+                                anchors.centerIn: parent
+                                text: "Test"
+                                font.family: "Helvetica"
+                                font.pixelSize: 20
+                            }
+                            MouseArea {
+                                id: testMouseArea
+                                anchors.fill: parent
+                                onClicked: {
+                                    titlePr = titlePr + ": TEST"
+                                }
+                            }
+                        }
                     }
                 }
                 style: ScrollBarStyle {}
@@ -162,7 +187,6 @@ Rectangle {
                 wrapMode: Text.Wrap
 
                 style: TextAreaStyle {
-                    transientScrollBars: true
                     decrementControl: Item {}
                     incrementControl: Item {}
                     frame: Item {}

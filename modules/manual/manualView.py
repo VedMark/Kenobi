@@ -3,7 +3,7 @@
 from PyQt5.QtCore import QMetaObject, Q_ARG, QVariant, QUrl, pyqtSignal, pyqtSlot
 from PyQt5.QtQuick import QQuickItem
 from PyQt5.QtQuickWidgets import QQuickWidget
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QHBoxLayout
 
 from modules.manual.manualPresenter import ManualPresenter
 
@@ -15,6 +15,10 @@ class ManualView(QWidget):
         self.reqReprSections.connect(self.setModel)
         self.reqReprTopics.connect(self.setModel)
         self._widget = QQuickWidget(self)
+        self.setLayout(QHBoxLayout())
+        self.layout().setContentsMargins(1, 1, 1, 1)
+        self.layout().addWidget(self._widget)
+        self._widget.setResizeMode(QQuickWidget.SizeRootObjectToView)
         self._widget.rootContext().setContextProperty('manualView', self)
         self._widget.setSource(QUrl('modules/manual/manualForm/ManualForm.qml'))
         self.getSections()

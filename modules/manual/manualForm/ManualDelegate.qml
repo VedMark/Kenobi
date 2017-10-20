@@ -29,7 +29,7 @@ Item {
         anchors.right: parent.right
         anchors.margins: 15
         height: 1
-        color: "#424246"
+        color: "#000000"
     }
 
     MouseArea {

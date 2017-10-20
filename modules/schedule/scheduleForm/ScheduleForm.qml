@@ -3,69 +3,11 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
 Rectangle {
-    property int heightRect: 704
-
     id: schedulePanel
+    width: 300
+    height: 600
     border.width: 3
-    height: heightRect
-    state: "collapsed"
-
-    Text {
-        id: title
-        anchors.centerIn: parent
-        font.pixelSize: 16
-        font.bold: true
-        font.family: "Helvetica"
-        color: "#000000"
-        text: "Schedule"
-        transform: Rotation {origin.y: -25; axis { x: 0; y: 0; z: 1 } angle: 270 }
-    }
-
-    states: [
-        State {
-            name: "collapsed"
-            PropertyChanges {
-                target: schedulePanel
-                color: "#ffd200"
-                width: 25
-                height: heightRect
-            }
-            PropertyChanges {
-                target: groupsList
-                visible: false
-            }
-            PropertyChanges {
-                target: scheduleList
-                visible: false
-            }
-            PropertyChanges {
-                target: title
-                visible: true
-            }
-        },
-
-        State {
-            name: "deployed"
-            PropertyChanges {
-                target: schedulePanel
-                color: "#FFFFFF"
-                width: 300
-                height: heightRect
-            }
-            PropertyChanges {
-                target: groupsList
-                visible: true
-            }
-            PropertyChanges {
-                target: scheduleList
-                visible: true
-            }
-            PropertyChanges {
-                target: title
-                visible: false
-            }
-        }
-    ]
+    color: "#FFFFFF"
 
     MouseArea {
         anchors.fill: parent
@@ -78,6 +20,11 @@ Rectangle {
             scheduleView.getGroups()
             scheduleView.getSchedules(groupsList.currentText)
         }
+    }
+
+    function initSchedule() {
+        scheduleView.getGroups()
+        scheduleView.getSchedules(groupsList.currentText)
     }
 
     function setScheduleModel(newElement) {
