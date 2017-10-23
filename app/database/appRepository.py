@@ -28,13 +28,3 @@ class AppRepository:
     @abstractmethod
     def _build_instances(self):
         pass
-
-    def __choose_column(self, column):
-        names = []
-        if self.query.isActive():
-            self.query.first()
-            while self.query.isValid():
-                names.append(self.query.value(column))
-                self.query.next()
-            self.query.finish()
-        return names

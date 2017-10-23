@@ -8,12 +8,6 @@ Item {
     property alias text: textitem.text
     signal clicked
 
-    Rectangle {
-        anchors.fill: parent
-        color: "#11ffffff"
-        visible: mouse.pressed
-    }
-
     Text {
         id: textitem
         color: "#000000"

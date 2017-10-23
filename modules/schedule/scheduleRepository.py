@@ -1,7 +1,6 @@
 #!/usr/bin/python2.7
 
 from app.database.appRepository import AppRepository
-from app.database.exceptions import DatabaseRequestError
 from modules.schedule.schedule import Schedule
 
 
@@ -14,13 +13,6 @@ class ScheduleRepository(AppRepository):
 
     def __init__(self):
             AppRepository.__init__(self)
-
-    def selectSatisfying(self, specification):
-        try:
-            self.query.exec_(specification.toSqlClauses())
-            return self._build_instances()
-        except DatabaseRequestError as exception:
-            exception.show()
 
     def _build_instances(self):
         instances = list()

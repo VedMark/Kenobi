@@ -27,7 +27,7 @@ class SchedulePresenter(QObject):
     def _getSchedules(self, group):
         spec = ScheduleByGroupSpecification(group)
         schedules = self._model.getEnries(spec)
-        schedules = map(lambda x: {'lesson': x.lesson, 'subject': x.subject, 'day': x.day}, schedules)
+        schedules = map(lambda x: {'lesson': x.lesson, 'subject': x.subject, 'day': x.day, 'answered': False}, schedules)
         schedules = self.__sortSchedules(schedules)
         self._view.reprSchedules(schedules)
 
