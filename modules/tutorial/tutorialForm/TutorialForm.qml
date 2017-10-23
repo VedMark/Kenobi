@@ -1,7 +1,9 @@
 import QtQuick 2.5
-import QtQuick.Window 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+
+import "../../tests/testForm"
+import "../../qmlStyles"
 
 Rectangle {
     id: contentWidget
@@ -23,7 +25,7 @@ Rectangle {
             anchors.left: parent.left
             width: opacity ? 60 : 0
             height: parent.height
-            opacity: stackView.depth > 1 ? 1 : 0
+            opacity: pagesView.depth > 1 ? 1 : 0
             border.width: 3
             color: backmouse.pressed ? "#ff8421" : "#d87e36"
             Image {
@@ -36,8 +38,11 @@ Rectangle {
                 id: backmouse
                 anchors.fill: parent
                 onClicked: {
-                    stackView.pop()
-                    titlePr = stackView.depth > 1
+                    // should contain destroy() method for the poped item
+                    pagesView.pop()
+                    if(titlePr.indexOf("TEST") != -1)
+                        titlePr = titlePr.substr(0, titlePr.lastIndexOf(": "))
+                    titlePr = pagesView.depth > 1
                         ? titlePr.substr(0, titlePr.lastIndexOf(": "))
                         : "Tutorial"
                 }
@@ -71,9 +76,33 @@ Rectangle {
     }
 
     StackView {
-        id: stackView
+        id: pagesView
+        objectName: "pagesView"
         anchors.fill: parent
         anchors.topMargin: titleWdt.height
+
+        delegate: StackViewDelegate {
+
+            function transitionFinished(properties)
+            {
+                properties.exitItem.opacity = 1
+            }
+
+            pushTransition: StackViewTransition {
+                PropertyAnimation {
+                    target: enterItem
+                    property: "opacity"
+                    from: 0
+                    to: 1
+                }
+                PropertyAnimation {
+                    target: exitItem
+                    property: "opacity"
+                    from: 1
+                    to: 0
+                }
+            }
+        }
 
         initialItem: sectionsComponent
 
@@ -102,7 +131,7 @@ Rectangle {
                         onClicked: {
                             titlePr = model.title
                             var sectId = model.sectionId
-                            stackView.push(topicsComponent)
+                            pagesView.push(topicsComponent)
                             tutorialView.getTopics(sectId)
                         }
                     }
@@ -135,31 +164,21 @@ Rectangle {
                         text: title
                         onClicked: {
                             titlePr = titlePr + ": " + model.title
-                            stackView.push({item: contentComponent, properties: {content: model.content}})
+                            pagesView.push({item: contentComponent, properties: {content: model.content}})
                         }
-                        Rectangle {
+                        GoToTestsButton {
                             anchors.top: parent.top
                             anchors.topMargin: 4
                             anchors.bottom: parent.bottom
                             anchors.bottomMargin: 4
                             anchors.right: parent.right
-                            width: testTxt.width + 30
-                            border.width: 3
                             anchors.rightMargin: 50
-                            color: testMouseArea.pressed ? "#ff8421" : "#d87e36"
-                            Text {
-                                id: testTxt
-                                anchors.centerIn: parent
-                                text: "Test"
-                                font.family: "Helvetica"
-                                font.pixelSize: 20
-                            }
-                            MouseArea {
-                                id: testMouseArea
-                                anchors.fill: parent
-                                onClicked: {
-                                    titlePr = titlePr + ": TEST"
-                                }
+                            onClicked: {
+                                var topicId = model.id
+                                titlePr = titlePr + ": " + model.title + ": TEST"
+                                pagesView.push({item: testComponent.item})
+                                pagesView.currentItem.init()
+                                testComponent.getTest(topicId)
                             }
                         }
                     }
@@ -185,30 +204,7 @@ Rectangle {
                 textFormat: Text.RichText
                 textMargin: 10
                 wrapMode: Text.Wrap
-
-                style: TextAreaStyle {
-                    decrementControl: Item {}
-                    incrementControl: Item {}
-                    frame: Item {}
-
-                    handle: Item {
-                        implicitWidth: 14
-                        implicitHeight: 26
-                        Rectangle {
-                            color: "#000000"
-                            radius: 3
-                            anchors.fill: parent
-                            anchors.topMargin: 4
-                            anchors.leftMargin: 4
-                            anchors.rightMargin: 4
-                            anchors.bottomMargin: 4
-                        }
-                    }
-                    scrollBarBackground: Item {
-                        implicitWidth: 14
-                        implicitHeight: 26
-                    }
-                }
+                style: TutorialAreaStyle {}
             }
         }
     }

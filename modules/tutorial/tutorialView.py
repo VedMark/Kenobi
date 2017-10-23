@@ -6,22 +6,31 @@ from PyQt5.QtQuickWidgets import QQuickWidget
 from PyQt5.QtWidgets import QWidget, QHBoxLayout
 
 from modules.tutorial.tutorialPresenter import TutorialPresenter
+from modules.tests.testComponent import TestComponent
 
 
 class TutorialView(QWidget):
     def __init__(self, parent=None):
         QWidget.__init__(self, parent=parent)
         self._presenter = TutorialPresenter(self)
+        self._widget = QQuickWidget(self)
+        self.testComponent = TestComponent(self._widget.engine(), self)
+        self._widget.setResizeMode(QQuickWidget.SizeRootObjectToView)
+        self._widget.rootContext().setContextProperty('tutorialView', self)
+        self._widget.rootContext().setContextProperty('testComponent', self.testComponent)
+        self._widget.setSource(QUrl('modules/tutorial/tutorialForm/TutorialForm.qml'))
+        self.__setConnections()
+        self.__locateWidgets()
+        self.getSections()
+
+    def __setConnections(self):
         self.reqReprSections.connect(self.setModel)
         self.reqReprTopics.connect(self.setModel)
-        self._widget = QQuickWidget(self)
+
+    def __locateWidgets(self):
         self.setLayout(QHBoxLayout())
         self.layout().setContentsMargins(1, 1, 1, 1)
         self.layout().addWidget(self._widget)
-        self._widget.setResizeMode(QQuickWidget.SizeRootObjectToView)
-        self._widget.rootContext().setContextProperty('tutorialView', self)
-        self._widget.setSource(QUrl('modules/tutorial/tutorialForm/TutorialForm.qml'))
-        self.getSections()
 
     _reqSections = pyqtSignal(name='requireSections')
     _reqTopics = pyqtSignal(str, name='requireTopics')
