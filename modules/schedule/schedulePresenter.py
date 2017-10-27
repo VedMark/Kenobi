@@ -1,7 +1,7 @@
 #!/usr/bin/python2.7
 
 from PyQt5.QtCore import QObject, pyqtSlot
-from modules.schedule.scheduleModel import ScheduleModel
+from modules.schedule.scheduleRepository import ScheduleRepository
 from modules.schedule.specifications.allGroupsSpecification import AllGroupsSpecification
 from modules.schedule.specifications.scheduleByGroupSpecification import ScheduleByGroupSpecification
 
@@ -10,7 +10,7 @@ class SchedulePresenter(QObject):
     def __init__(self, view):
         QObject.__init__(self)
         self._view = view
-        self._model = ScheduleModel()
+        self._repository = ScheduleRepository()
         self.__set_connections()
 
     def __set_connections(self):
@@ -20,13 +20,13 @@ class SchedulePresenter(QObject):
     @pyqtSlot(name='getGroups')
     def _getGroups(self):
         spec = AllGroupsSpecification()
-        entries = self._model.getEnries(spec)
+        entries = self._repository.selectSatisfying(spec)
         self._view.reprGroupsList(sorted([entry.group for entry in entries]))
 
     @pyqtSlot(str, name='getSchedules')
     def _getSchedules(self, group):
         spec = ScheduleByGroupSpecification(group)
-        schedules = self._model.getEnries(spec)
+        schedules = self._repository.selectSatisfying(spec)
         schedules = map(lambda x: {'lesson': x.lesson, 'subject': x.subject, 'day': x.day, 'answered': False}, schedules)
         schedules = self.__sortSchedules(schedules)
         self._view.reprSchedules(schedules)
