@@ -27,7 +27,7 @@ Rectangle {
             height: parent.height
             opacity: pagesView.depth > 1 ? 1 : 0
             border.width: 3
-            color: backmouse.pressed ? "#ff8421" : "#d87e36"
+            color: backmouse.pressed ? "#000000" : "#38300a"
             Image {
                 anchors.centerIn: parent
                 anchors.fill: parent

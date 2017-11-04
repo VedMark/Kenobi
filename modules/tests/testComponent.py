@@ -20,9 +20,7 @@ class TestComponent(QQmlComponent):
         return self._item
 
     _reqTest = pyqtSignal(str, name='requireTest')
-    _reqAnswer = pyqtSignal(str, name='requireAnswer')
     _reqReprTest = pyqtSignal(QQuickItem, str, list, name='reqReprTest')
-    _reqReprTopics = pyqtSignal(QQuickItem, str, list, name='reqReprTopics')
 
     @pyqtSlot(str, name='getTest')
     def _getTest(self, topicId):
@@ -30,13 +28,6 @@ class TestComponent(QQmlComponent):
 
     def reprTest(self, tests):
         self.reqReprTest.emit(self._item, 'setTestModel', tests)
-
-    @pyqtSlot(str, name='getAnswer')
-    def _getAnswer(self, variant):
-        self.requireAnswer.emit(variant)
-
-    def reprTopicsList(self, topics):
-        self.reqReprTopics.emit(self._widget.rootObject(), 'setTopicsModel', topics)
 
     @pyqtSlot(QQuickItem, str, list, name='setModel')
     def _setModel(self, obj, callF, values):

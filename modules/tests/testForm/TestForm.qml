@@ -121,6 +121,7 @@ Rectangle {
                                 totalAnswers += 1
                                 if (correct) correctAnswers += 1
                         }
+                        else return;
                         if(totalAnswers == questionsCount){
                             var component = Qt.createComponent("ResultDialog.qml");
                             if (component.status === Component.Ready) {

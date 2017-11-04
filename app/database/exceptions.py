@@ -21,6 +21,8 @@ class DatabaseError(Exception):
 class DatabaseConnectionError(DatabaseError):
     def __init__(self, database, message):
         super(DatabaseError, self).__init__(database, message)
+        self._message = message
+        self.database = database
 
     def show(self):
         QMessageBox.critical(None,
@@ -32,6 +34,8 @@ class DatabaseConnectionError(DatabaseError):
 class DatabaseRequestError(DatabaseError):
     def __init__(self, database, message):
         super(DatabaseError, self).__init__(database, message)
+        self._message = message
+        self.database = database
 
     def show(self):
         QMessageBox.warning(None,
